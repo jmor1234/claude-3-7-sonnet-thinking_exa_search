@@ -88,7 +88,7 @@ export const contextualWebSearch = tool({
       for (const queryObj of generatedQueries.queries) {
         // Configure search parameters for this query
         const searchConfig = {
-          numResults: 5,
+          numResults: 4,
           type: 'auto' as const,
           useAutoprompt: true,
           highlights: {
