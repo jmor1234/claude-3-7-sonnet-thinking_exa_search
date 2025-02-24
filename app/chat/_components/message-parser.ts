@@ -44,18 +44,12 @@ export interface ReasoningBlock {
         })
       }
   
-      // Parse final answer - updated to handle multiple final_answer tags if present
-      let finalContent = ''
-      while ((match = finalAnswerRegex.exec(content)) !== null) {
-        finalContent += (finalContent ? '\n' : '') + match[1].trim()
-      }
-      if (finalContent) {
-        finalResponse = finalContent
-      }
-  
-      // Parse sources with improved bullet point handling
+      // First, extract and remove sources from the content
+      // This needs to happen BEFORE processing final answer to ensure sources aren't included
+      let contentWithoutSources = content;
       const sourcesMatch = sourcesRegex.exec(content)
       if (sourcesMatch) {
+        // Extract sources for the sources component
         const sourcesContent = sourcesMatch[1]
         sources = sourcesContent
           .split('\n')
@@ -71,13 +65,26 @@ export interface ReasoningBlock {
               ...(urlMatch && urlMatch[2] ? { title: urlMatch[2].trim() } : {})
             }
           })
+        
+        // Remove sources section from content
+        contentWithoutSources = content.replace(sourcesRegex, '').trim()
       }
   
-      // If no final_answer tag was found, look for content between last reasoning and sources
+      // Parse final answer - updated to handle multiple final_answer tags if present
+      let finalContent = ''
+      const finalAnswerMatches = contentWithoutSources.matchAll(finalAnswerRegex)
+      for (const match of finalAnswerMatches) {
+        finalContent += (finalContent ? '\n' : '') + match[1].trim()
+      }
+      
+      if (finalContent) {
+        finalResponse = finalContent
+      }
+  
+      // If no final_answer tag was found, use content without tags
       if (!finalResponse) {
-        const contentWithoutTags = content
+        const contentWithoutTags = contentWithoutSources
           .replace(reasoningRegex, '')
-          .replace(sourcesRegex, '')
           .replace(/<final_answer>/g, '')
           .replace(/<\/final_answer>/g, '')
           .trim()
@@ -90,6 +97,14 @@ export interface ReasoningBlock {
       return { reasoning, finalResponse, sources }
     } catch (error) {
       console.error('Error parsing message:', error)
-      return { reasoning: [], finalResponse: content.trim(), sources: [] }
+      // Even in error case, try to remove sources tag
+      try {
+        const sourcesRegex = /<sources>[\s\S]*?<\/sources>/g;
+        const cleanedContent = content.replace(sourcesRegex, '').trim();
+        return { reasoning: [], finalResponse: cleanedContent, sources: [] }
+      } catch {
+        // If that fails too, just return original content
+        return { reasoning: [], finalResponse: content.trim(), sources: [] }
+      }
     }
   } 

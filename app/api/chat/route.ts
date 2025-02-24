@@ -23,16 +23,26 @@ export async function POST(req: Request) {
   let stepCounter = 0;
 
   const result = streamText({
-    model: anthropic('claude-3-5-sonnet-latest'),
+    model: anthropic('claude-3-7-sonnet-20250219'),
+    providerOptions: {
+      anthropic: {
+        thinking: {
+          type: "enabled",
+          budgetTokens: 12000,
+        },
+      },
+    },
     system: SYSTEM_PROMPT,
     messages,
     experimental_transform: smoothStream(),
     maxSteps: 6,
     toolChoice: 'auto',
-    onStepFinish: ({ toolCalls, toolResults, finishReason, usage, text }) => {
+    onStepFinish: ({ toolCalls, toolResults, finishReason, usage, text, reasoning, reasoningDetails }) => {
       stepCounter++;
       console.log(`\n📊 Step ${stepCounter} Finished:`);
       console.log('🏁 Finish Reason:', finishReason);
+      console.log('💭 Reasoning:', reasoning);
+      console.log('💭 Reasoning Details:', reasoningDetails);
 
       console.log('💬 Model Response:', text);
       
@@ -65,5 +75,10 @@ export async function POST(req: Request) {
   console.log('\n📤 Starting response stream...\n');
   console.log('------------------------\n');
 
-  return result.toDataStreamResponse();
+  return result.toDataStreamResponse({
+    sendReasoning: true,
+    getErrorMessage: () => {
+      return 'An error occurred while generating the response. Please try again.';
+    }
+  });
 }

@@ -46,7 +46,7 @@ export const contextualWebSearch = tool({
     try {
       // Generate contextual queries
       const { object: generatedQueries } = await generateObject({
-        model: anthropic('claude-3-5-sonnet-latest'),
+        model: anthropic('claude-3-7-sonnet-20250219'),
         schema: queryGenSchema,
         prompt: `Based on the following context, generate exactly ${numberOfQueries} search queries to gather comprehensive information:
 

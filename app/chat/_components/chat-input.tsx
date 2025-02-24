@@ -135,7 +135,7 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
                       ease: "easeInOut"
                     }}
                   >
-                    Claude is thinking
+                    Claude 3.7 Sonnet is thinking carefully
                   </motion.span>
                   <div className="flex gap-1.5 ml-1">
                     <motion.span 
@@ -206,7 +206,7 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
                 value={input}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyPress}
-                placeholder="Message Claude..."
+                placeholder="Message the new Claude 3.7 Sonnet..."
                 className={cn(
                   "w-full py-3.5 px-5 text-base bg-transparent border-0 resize-none",
                   "placeholder:text-muted-foreground/40",

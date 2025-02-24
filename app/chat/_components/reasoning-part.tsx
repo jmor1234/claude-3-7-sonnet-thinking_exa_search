@@ -1,15 +1,18 @@
-// app/chat/_components/source-block.tsx
-
 "use client"
 
-import type { Source } from "./message-parser"
-import { Link2, ChevronDown } from "lucide-react"
+import { Brain, ChevronDown } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, type KeyboardEvent } from "react"
 import { cn } from "@/lib/utils"
+import { MarkdownContent } from './markdown-content'
 
-interface SourceBlockProps {
-  sources: Source[]
+interface ReasoningPartProps {
+  part: {
+    type: 'reasoning';
+    reasoning: string;
+    details: Array<{ type: 'text'; text: string }>;
+  };
+  isStreaming?: boolean;
 }
 
 const blockVariants = {
@@ -17,21 +20,7 @@ const blockVariants = {
   expanded: { height: "auto", opacity: 1 },
 }
 
-function ensureExternalUrl(url: string): string {
-  // Remove any localhost prefix if it exists
-  if (url.startsWith('http://localhost:3000/')) {
-    url = url.replace('http://localhost:3000/', '')
-  }
-  
-  // If the URL doesn't start with http:// or https://, assume it's an external URL
-  if (!url.startsWith('http://') && !url.startsWith('https://')) {
-    url = `https://${url}`
-  }
-  
-  return url
-}
-
-export function SourceBlock({ sources }: SourceBlockProps) {
+export function ReasoningPartComponent({ part, isStreaming = false }: ReasoningPartProps) {
   const [isExpanded, setIsExpanded] = useState(true)
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -40,8 +29,6 @@ export function SourceBlock({ sources }: SourceBlockProps) {
       setIsExpanded(!isExpanded)
     }
   }
-
-  if (sources.length === 0) return null
 
   return (
     <motion.div
@@ -53,7 +40,7 @@ export function SourceBlock({ sources }: SourceBlockProps) {
         role="button"
         tabIndex={0}
         aria-expanded={isExpanded}
-        aria-controls="sources-content"
+        aria-controls="reasoning-content"
         className={cn(
           "w-full p-3 flex items-center justify-between text-sm font-medium",
           "text-muted-foreground hover:text-foreground",
@@ -65,10 +52,10 @@ export function SourceBlock({ sources }: SourceBlockProps) {
       >
         <div className="flex items-center gap-2">
           <div className="p-1 rounded-md bg-background/50">
-            <Link2 className="h-4 w-4" aria-hidden="true" />
+            <Brain className="h-4 w-4" aria-hidden="true" />
           </div>
           <span className="text-sm font-medium">
-            Sources ({sources.length})
+            {isStreaming ? "Reasoning..." : "Reasoning"}
           </span>
         </div>
         <ChevronDown
@@ -83,9 +70,9 @@ export function SourceBlock({ sources }: SourceBlockProps) {
       <AnimatePresence initial={false}>
         {isExpanded && (
           <motion.div
-            id="sources-content"
+            id="reasoning-content"
             role="region"
-            aria-label="Source citations"
+            aria-label="Reasoning content"
             variants={blockVariants}
             initial="collapsed"
             animate="expanded"
@@ -93,30 +80,17 @@ export function SourceBlock({ sources }: SourceBlockProps) {
             transition={{ duration: 0.2, ease: "easeInOut" }}
           >
             <div className="px-4 pb-3 pt-1">
-              <ul className="space-y-2">
-                {sources.map((source) => (
-                  <li 
-                    key={source.number}
-                    className="flex items-start gap-2 text-sm text-muted-foreground"
-                  >
-                    <span className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">
-                      {source.number}
-                    </span>
-                    <a
-                      href={ensureExternalUrl(source.url)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        "hover:text-foreground transition-colors duration-200",
-                        "underline decoration-1 underline-offset-4 hover:decoration-2",
-                        "flex-1 break-all"
-                      )}
-                    >
-                      {source.title || source.url}
-                    </a>
-                  </li>
+              <div className="text-sm text-muted-foreground space-y-3">
+                {part.details.map((detail, index) => (
+                  <div key={index} className="whitespace-pre-wrap leading-relaxed">
+                    <MarkdownContent 
+                      content={detail.text}
+                      className="text-sm"
+                      isUser={false}
+                    />
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           </motion.div>
         )}

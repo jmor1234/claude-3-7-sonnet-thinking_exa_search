@@ -1,5 +1,6 @@
 ---
 description: frontend
 globs: /app/chat
+alwaysApply: false
 ---
-ShadCN/UI Components as much as possible. Clean and Slick Minimalistic UI. Visually Pleasing
+ShadCN/UI Components as much as possible. Clean and Slick Minimalistic UI. Visually Pleasing, Modern.

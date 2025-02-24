@@ -27,7 +27,7 @@ export function Header() {
             transition={{ duration: 0.2, delay: 0.1 }}
             className="text-sm font-medium sm:text-base bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
           >
-            Claude-Thinking-Contextual-Search
+            Claude 3.7 Sonnet With Thinking and Contextual Search
           </motion.span>
         </Link>
 

@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Claude Thinking Contextual Search",
-  description: "Claude Thinking Contextual Search",
+  title: "Claude 3.7 Sonnet With Thinking and Contextual Search",
+  description: "Claude 3.7 Sonnet With Thinking and Contextual Search",
 };
 
 export default async function RootLayout({
