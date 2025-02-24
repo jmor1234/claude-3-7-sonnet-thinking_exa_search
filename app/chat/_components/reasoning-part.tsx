@@ -10,7 +10,7 @@ interface ReasoningPartProps {
   part: {
     type: 'reasoning';
     reasoning: string;
-    details: Array<{ type: 'text'; text: string }>;
+    details: Array<{ type: 'text'; text: string; signature?: string } | { type: 'redacted'; data: string }>;
   };
   isStreaming?: boolean;
 }
@@ -83,11 +83,15 @@ export function ReasoningPartComponent({ part, isStreaming = false }: ReasoningP
               <div className="text-sm text-muted-foreground space-y-3">
                 {part.details.map((detail, index) => (
                   <div key={index} className="whitespace-pre-wrap leading-relaxed">
-                    <MarkdownContent 
-                      content={detail.text}
-                      className="text-sm"
-                      isUser={false}
-                    />
+                    {detail.type === 'text' ? (
+                      <MarkdownContent 
+                        content={detail.text}
+                        className="text-sm"
+                        isUser={false}
+                      />
+                    ) : (
+                      <div className="text-muted italic">[Redacted content]</div>
+                    )}
                   </div>
                 ))}
               </div>

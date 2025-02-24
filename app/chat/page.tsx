@@ -13,6 +13,28 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import { MarkdownContent } from "./_components/markdown-content"
 
+// Add adapter to convert from UI message types to the types expected by AIMessage
+import type { Message } from "ai"
+
+// Types to match what's used in the app
+type TextUIPart = { type: 'text'; text: string; }
+type ReasoningUIPart = { 
+  type: 'reasoning'; 
+  reasoning: string; 
+  details: Array<{ type: 'text'; text: string; signature?: string; } | { type: 'redacted'; data: string; }>;
+}
+type ToolInvocationUIPart = { type: 'tool_invocation'; tool: string; } 
+type SourceUIPart = { type: 'source'; source: string; }
+
+type UIMessage = Message & {
+  parts?: (TextUIPart | ReasoningUIPart | ToolInvocationUIPart | SourceUIPart)[];
+}
+
+// Convert to ExtendedMessage type expected by AIMessage component
+type ExtendedMessage = Message & {
+  parts?: Array<TextUIPart | ReasoningUIPart>;
+}
+
 const messageVariants = {
   initial: { opacity: 0, y: 10 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
@@ -145,7 +167,14 @@ export default function ChatPage() {
                       />
                     </div>
                   ) : (
-                    <AIMessage message={message} />
+                    <AIMessage 
+                      message={{
+                        ...message,
+                        parts: message.parts?.filter(
+                          part => part.type === 'text' || part.type === 'reasoning'
+                        ) as any
+                      }} 
+                    />
                   )}
                 </motion.div>
               ))}

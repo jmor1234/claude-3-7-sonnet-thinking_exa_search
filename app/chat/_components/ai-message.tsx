@@ -15,10 +15,11 @@ type TextPart = {
   text: string;
 };
 
+// Update ReasoningPart to match the structure expected in UIMessage
 type ReasoningPart = {
   type: 'reasoning';
   reasoning: string;
-  details: Array<{ type: 'text'; text: string }>;
+  details: Array<{ type: 'text'; text: string; signature?: string } | { type: 'redacted'; data: string }>;
 };
 
 type MessagePart = TextPart | ReasoningPart;
@@ -51,6 +52,11 @@ export function AIMessage({ message }: AIMessageProps) {
   // Parse the message content to extract sources and clean the final response
   const { reasoning, finalResponse, sources } = parseMessage(message.content);
   
+  // Ensure the parts are of the correct type
+  const safeParts = message.parts?.filter(
+    part => part.type === 'text' || part.type === 'reasoning'
+  ) as MessagePart[] | undefined;
+  
   return (
     <motion.div
       variants={messageVariants}
@@ -61,16 +67,15 @@ export function AIMessage({ message }: AIMessageProps) {
       className="flex flex-col gap-4"
     >
       {/* Handle message parts if they exist */}
-      {message.parts && message.parts.length > 0 ? (
+      {safeParts && safeParts.length > 0 ? (
         (() => {
-          const parts = message.parts;
-          return parts.map((part, index) => {
+          return safeParts.map((part, index) => {
             if (part.type === 'reasoning') {
               return (
                 <ReasoningPartComponent 
                   key={`reasoning-${index}`} 
                   part={part} 
-                  isStreaming={index === parts.length - 1 && !part.details.length}
+                  isStreaming={index === safeParts.length - 1 && !part.details.length}
                 />
               );
             }
