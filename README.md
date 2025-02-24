@@ -11,3 +11,5 @@ Tech Stack:
 - Exa API
 - Vercel Deployments
 - Cursor IDE and v0 for Dev and UI
+
+You can clone and run locally you just need anthropic api key and exa api key
