@@ -9,15 +9,36 @@ const exa = new Exa(process.env.EXA_API_KEY);
 
 export const formatCurrentDateTime = () => {
   const now = new Date();
+  
+  // Get the user's local time zone
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  
+  // Format the date in the user's local time zone
   return now.toLocaleString('en-US', { 
-    timeZone: 'America/New_York',
+    timeZone,
     dateStyle: 'medium',
     timeStyle: 'medium'
-  }) + ' EST';
+  }) + ` (${getTimeZoneAbbreviation(timeZone)})`;
 };
 
+// Helper function to get time zone abbreviation
+function getTimeZoneAbbreviation(timeZone: string): string {
+  try {
+    // Get the time zone abbreviation from the formatted date
+    const options: Intl.DateTimeFormatOptions = { timeZoneName: 'short' };
+    const shortTimeZone = new Intl.DateTimeFormat('en-US', options)
+      .formatToParts(new Date())
+      .find(part => part.type === 'timeZoneName')?.value || '';
+    
+    return shortTimeZone;
+  } catch (error) {
+    // Fallback if there's an error getting the abbreviation
+    return timeZone.split('/').pop() || '';
+  }
+}
+
 export const contextualWebSearch = tool({
-  description: `Executes a specified number of web searches based on your strategic decision. You determine the number of searches (2-6) based on topic complexity and user needs. Current date is ${formatCurrentDateTime()}`,
+  description: `Executes a specified number of web searches based on your strategic decision. You determine the number of searches (2-6) based on topic complexity and user needs. Each search can be configured as "keyword" (for specific terms/names that should appear in results), "neural" (for conceptual searches requiring semantic understanding), or "auto" search type. Current date is ${formatCurrentDateTime()}`,
   parameters: z.object({
     numberOfQueries: z.number()
       .min(2)
@@ -31,11 +52,12 @@ export const contextualWebSearch = tool({
   execute: async ({ numberOfQueries, conversationContext, currentIntent }) => {
     const searchStartTime = new Date();
     
-    // Define schema for query generation with fixed count
+    // Define schema for query generation with fixed count - now including searchType
     const queryGenSchema = z.object({
       queries: z.array(z.object({
         query: z.string(),
         reasoning: z.string(),
+        searchType: z.enum(['neural', 'keyword', 'auto']),  // Add searchType field
         dateRange: z.object({
           startPublishedDate: z.string().optional(),
           endPublishedDate: z.string().optional()
@@ -44,7 +66,7 @@ export const contextualWebSearch = tool({
     });
 
     try {
-      // Generate contextual queries
+      // Generate contextual queries with enhanced prompt for search type selection
       const { object: generatedQueries } = await generateObject({
         model: anthropic('claude-3-7-sonnet-20250219'),
         schema: queryGenSchema,
@@ -61,6 +83,11 @@ export const contextualWebSearch = tool({
         - Help build a comprehensive understanding
         - Consider time sensitivity of the topic
 
+        IMPORTANT - For each query, select the appropriate search type:
+        - "keyword": Use for specific terms, names, identifiers, or exact phrases that should appear directly in results. Best for looking up specific entities or when exact matching is important.
+        - "neural": Use for broad, complex queries where semantic understanding is needed. Best for conceptual searches, finding related content, or exploring ideas.
+        - "auto": Only use when uncertain which type is better. The system will try to choose, but explicit selection is preferred.
+
         Time Sensitivity Guidelines:
         - For current events or recent developments, specify date ranges
         - For timeless topics (concepts, definitions), skip date filtering
@@ -73,7 +100,8 @@ export const contextualWebSearch = tool({
         For each query, provide:
         1. The search query
         2. Reasoning for how this query contributes to the overall information gathering strategy
-        3. Date range requirements (if applicable for time-sensitive topics)`,
+        3. The specific search type to use (keyword, neural, or auto) with clear justification
+        4. Date range requirements (if applicable for time-sensitive topics)`,
       });
 
       // Add delay helper
@@ -86,10 +114,10 @@ export const contextualWebSearch = tool({
       // Execute searches with rate limiting
       const searchResults = [];
       for (const queryObj of generatedQueries.queries) {
-        // Configure search parameters for this query
+        // Configure search parameters for this query with the selected search type
         const searchConfig = {
           numResults: 4,
-          type: 'auto' as const,
+          type: queryObj.searchType,  // Use the selected search type
           useAutoprompt: true,
           highlights: {
             numSentences: 3,
@@ -111,6 +139,7 @@ export const contextualWebSearch = tool({
         console.log('------------------------');
         console.log('Original Query:', queryObj.query);
         console.log('Query Reasoning:', queryObj.reasoning);
+        console.log('Search Type:', queryObj.searchType);  // Log the search type
         if (queryObj.dateRange) {
           console.log('Date Range:', queryObj.dateRange);
         }
@@ -137,6 +166,7 @@ export const contextualWebSearch = tool({
         searchResults.push({
           query: queryObj.query,
           reasoning: queryObj.reasoning,
+          searchType: queryObj.searchType,  // Include search type in results
           dateRange: queryObj.dateRange,
           results: result
         });
