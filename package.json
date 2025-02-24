@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^1.1.6",
-    "@ai-sdk/openai": "^1.1.9",
+    "@ai-sdk/anthropic": "^1.1.10",
+    "@ai-sdk/openai": "^1.1.14",
     "@clerk/nextjs": "^6.11.2",
     "@clerk/themes": "^2.2.17",
     "@radix-ui/react-dialog": "^1.1.6",
@@ -22,7 +22,7 @@
     "@radix-ui/react-toast": "^1.2.6",
     "@types/lodash": "^4.17.15",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "ai": "^4.1.26",
+    "ai": "^4.1.46",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
