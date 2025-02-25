@@ -33,7 +33,7 @@ export function ReasoningBlockComponent({ block }: ReasoningBlockProps) {
     <motion.div
       initial={{ opacity: 0, y: -5 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-muted/30 rounded-lg overflow-hidden transition-all duration-200 hover:bg-muted/40"
+      className="bg-muted/50 dark:bg-muted/40 rounded-lg overflow-hidden transition-all duration-200 hover:bg-muted/60 dark:hover:bg-muted/50 shadow-md"
     >
       <button
         role="button"
@@ -50,7 +50,7 @@ export function ReasoningBlockComponent({ block }: ReasoningBlockProps) {
         onKeyDown={handleKeyDown}
       >
         <div className="flex items-center gap-2">
-          <div className="p-1 rounded-md bg-background/50">
+          <div className="p-1 rounded-md bg-background/70 dark:bg-background/50">
             <Icon className="h-4 w-4" aria-hidden="true" />
           </div>
           <span className="text-sm font-medium">
@@ -78,7 +78,7 @@ export function ReasoningBlockComponent({ block }: ReasoningBlockProps) {
             exit="collapsed"
             transition={{ duration: 0.2, ease: "easeInOut" }}
           >
-            <div className="px-4 pb-3 pt-1">
+            <div className="px-4 pb-3 pt-1 border-t border-muted/40 dark:border-muted/50 bg-muted/20 dark:bg-muted/15">
               <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">
                 {block.content}
               </p>

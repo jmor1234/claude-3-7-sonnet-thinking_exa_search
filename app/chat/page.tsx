@@ -138,7 +138,7 @@ export default function ChatPage() {
       variants={containerVariants}
       initial="initial"
       animate="animate"
-      className="min-h-[calc(100vh-48px)] flex flex-col pt-12 bg-gradient-to-b from-background to-background/95"
+      className="min-h-[calc(100vh-48px)] flex flex-col pt-12 bg-gradient-to-b from-background via-background/98 to-background/95 bg-[radial-gradient(#00000004_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff02_1px,transparent_1px)] bg-[size:24px_24px]"
     >
       <ScrollArea 
         className={cn(
@@ -182,12 +182,12 @@ export default function ChatPage() {
                 >
                   {message.role === "user" ? (
                     <motion.div 
-                      className="glass-card bg-primary/15 dark:bg-primary/20 backdrop-blur-sm max-w-[85%] md:max-w-[75%] px-5 py-3.5 border-primary/30"
+                      className="user-glass-card max-w-[85%] md:max-w-[75%] px-5 py-3.5 shadow-lg"
                       whileHover={{ y: -2, boxShadow: "0 14px 28px -8px rgba(0,0,0,0.15), inset 0 1px 0 0 rgba(255,255,255,0.1)"}}
                     >
                       <MarkdownContent 
                         content={message.content}
-                        className="text-sm leading-relaxed text-foreground font-medium"
+                        className="text-sm leading-relaxed font-medium text-primary/90 dark:text-primary/95"
                         isUser={true}
                       />
                     </motion.div>
@@ -256,7 +256,7 @@ export default function ChatPage() {
           </div>
         )}
       </ScrollArea>
-      <div className="fixed bottom-0 left-0 right-0 bg-background/60 backdrop-blur-xl border-t border-neutral-200/20 dark:border-neutral-800/30">
+      <div className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-xl border-t border-neutral-200/20 dark:border-neutral-800/30">
         <div className="max-w-5xl mx-auto w-full px-4 md:px-6 lg:px-8 py-4">
           <ChatInput
             input={input}

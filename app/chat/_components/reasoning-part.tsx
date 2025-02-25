@@ -45,9 +45,9 @@ export function ReasoningPartComponent({ part, isStreaming = false }: ReasoningP
       className={cn(
         "rounded-lg overflow-hidden",
         "transition-all duration-300 ease-out",
-        "max-w-[92%] bg-muted/30 dark:bg-muted/20 backdrop-blur-md",
-        "border border-muted/40 dark:border-muted/30",
-        "shadow-[0_8px_16px_-6px_rgba(0,0,0,0.08)]"
+        "max-w-[92%] bg-muted/50 dark:bg-muted/40 backdrop-blur-md",
+        "border border-muted/60 dark:border-muted/50",
+        "shadow-[0_8px_20px_-6px_rgba(0,0,0,0.12)]"
       )}
     >
       <button
@@ -60,7 +60,7 @@ export function ReasoningPartComponent({ part, isStreaming = false }: ReasoningP
           "text-muted-foreground hover:text-foreground",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           "transition-all duration-200",
-          "hover:bg-muted/10 active:bg-muted/20",
+          "hover:bg-muted/20 active:bg-muted/30",
           "rounded-t-lg"
         )}
         onClick={() => setIsExpanded(!isExpanded)}
@@ -105,8 +105,8 @@ export function ReasoningPartComponent({ part, isStreaming = false }: ReasoningP
           >
             <div className={cn(
               "px-5 pb-4 pt-1",
-              "border-t border-muted/20 dark:border-muted/30 bg-muted/10 dark:bg-muted/5",
-              "bg-[radial-gradient(#00000005_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff03_1px,transparent_1px)]",
+              "border-t border-muted/40 dark:border-muted/50 bg-muted/20 dark:bg-muted/15",
+              "bg-[radial-gradient(#00000008_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff05_1px,transparent_1px)]",
               "bg-[size:20px_20px]"
             )}>
               <div className="text-sm text-muted-foreground space-y-2">

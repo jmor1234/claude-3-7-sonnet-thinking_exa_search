@@ -49,21 +49,23 @@ export function MarkdownContent({ content, className, isUser, isReasoning }: Mar
         : isUser 
           ? [
               "prose-invert",
-              "prose-p:text-foreground prose-p:font-medium",
-              "prose-a:text-foreground prose-a:hover:text-foreground prose-a:font-medium",
-              "prose-code:bg-foreground/20",
-              "prose-li:text-foreground",
+              "prose-p:text-foreground/95 dark:prose-p:text-foreground prose-p:font-medium",
+              "prose-a:text-foreground/95 dark:prose-a:text-foreground prose-a:hover:text-foreground prose-a:font-medium",
+              "prose-code:bg-primary/10 dark:prose-code:bg-foreground/20",
+              "prose-li:text-foreground/95 dark:prose-li:text-foreground",
               "prose-headings:text-foreground",
-              "prose-blockquote:border-foreground/30"
+              "prose-blockquote:border-foreground/30",
+              "selection:bg-primary/20 selection:text-primary-foreground"
             ]
           : [
               "dark:prose-invert",
-              "prose-p:text-foreground/90",
-              "prose-a:text-foreground/90 prose-a:hover:text-foreground prose-a:font-medium",
+              "prose-p:text-foreground/95 prose-p:font-normal",
+              "prose-a:text-foreground/95 prose-a:hover:text-foreground prose-a:font-medium",
               "prose-code:bg-muted",
-              "prose-li:text-foreground/90",
+              "prose-li:text-foreground/95",
               "prose-headings:text-foreground",
-              "prose-blockquote:border-border"
+              "prose-blockquote:border-border",
+              "selection:bg-primary/15 selection:text-primary-foreground"
             ],
       className
     )}>
@@ -95,7 +97,7 @@ export function MarkdownContent({ content, className, isUser, isReasoning }: Mar
                 "bg-muted/50 px-1.5 py-0.5 rounded font-mono text-sm",
                 isUser ? "text-primary-foreground font-medium bg-primary/10" : 
                 isReasoning ? "text-muted-foreground/80 bg-muted/20" : 
-                "text-foreground"
+                "text-foreground font-medium"
               )}>
                 {children}
               </code>
@@ -143,7 +145,8 @@ export function MarkdownContent({ content, className, isUser, isReasoning }: Mar
           p: ({ ...props }) => (
             <p className={cn(
               "mb-2 last:mb-0 leading-relaxed",
-              isReasoning && "leading-normal mb-1.5"
+              isReasoning && "leading-normal mb-1.5",
+              !isUser && !isReasoning && "text-foreground/95"
             )} {...props} />
           ),
           li: ({ ...props }) => (

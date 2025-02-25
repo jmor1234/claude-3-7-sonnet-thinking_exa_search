@@ -41,6 +41,17 @@ body {
     --glass-border: 0 0% 100% / 0.1;
     --glass-highlight: 0 0% 100% / 0.15;
     --glass-shadow: 0 0% 0% / 0.15;
+    
+    /* AI message bubble variables - cool neutral tones */
+    --chat-bubble-bg: 225 15% 93% / 0.92;
+    --chat-bubble-border: 220 20% 80% / 0.7;
+    --chat-bubble-shadow: 220 40% 2% / 0.15;
+    
+    /* User message bubble variables - warm blue gradient */
+    --user-bubble-bg: 210 80% 98% / 0.9;
+    --user-bubble-gradient: linear-gradient(135deg, hsla(220, 100%, 97%, 0.95), hsla(230, 100%, 94%, 0.9));
+    --user-bubble-border: 220 90% 75% / 0.5;
+    --user-bubble-shadow: 220 60% 40% / 0.15;
   }
   .dark {
     --background: 222.2 84% 4.9%;
@@ -73,6 +84,17 @@ body {
     --glass-border: 220 40% 50% / 0.1;
     --glass-highlight: 210 40% 98% / 0.08;
     --glass-shadow: 220 40% 2% / 0.25;
+    
+    /* AI message bubble variables for dark mode - deeper grays */
+    --chat-bubble-bg: 215 25% 15% / 0.9;
+    --chat-bubble-border: 215 20% 40% / 0.2; 
+    --chat-bubble-shadow: 220 40% 2% / 0.3;
+    
+    /* User message bubble variables for dark mode - blue tones */
+    --user-bubble-bg: 220 70% 30% / 0.35;
+    --user-bubble-gradient: linear-gradient(135deg, hsla(220, 70%, 30%, 0.4), hsla(230, 70%, 25%, 0.35));
+    --user-bubble-border: 220 70% 60% / 0.25;
+    --user-bubble-shadow: 220 70% 10% / 0.35;
   }
 }
 
@@ -152,13 +174,14 @@ body {
       inset 0 1px 0 0 hsla(var(--glass-highlight));
   }
   
+  /* AI message bubble */
   .glass-card {
     border-radius: 1.375rem; /* rounded-[22px] */
-    background-color: hsla(var(--card) / 0.3);
+    background-color: hsla(var(--chat-bubble-bg));
     backdrop-filter: blur(12px);
-    border: 1px solid hsla(var(--glass-border));
+    border: 1px solid hsla(var(--chat-bubble-border));
     box-shadow: 
-      0 8px 24px -6px hsla(var(--glass-shadow)),
+      0 8px 24px -6px hsla(var(--chat-bubble-shadow)),
       inset 0 1px 0 0 hsla(var(--glass-highlight));
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
@@ -166,7 +189,26 @@ body {
   .glass-card:hover {
     transform: translateY(-1px) scale(1.005);
     box-shadow: 
-      0 14px 28px -10px hsla(var(--glass-shadow)),
+      0 14px 28px -10px hsla(var(--chat-bubble-shadow)),
+      inset 0 1px 0 0 hsla(var(--glass-highlight));
+  }
+  
+  /* User message bubble with gradient */
+  .user-glass-card {
+    border-radius: 1.375rem; /* rounded-[22px] */
+    background: var(--user-bubble-gradient);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsla(var(--user-bubble-border));
+    box-shadow: 
+      0 8px 24px -6px hsla(var(--user-bubble-shadow)),
+      inset 0 1px 0 0 hsla(var(--glass-highlight));
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .user-glass-card:hover {
+    transform: translateY(-1px) scale(1.005);
+    box-shadow: 
+      0 14px 28px -10px hsla(var(--user-bubble-shadow)),
       inset 0 1px 0 0 hsla(var(--glass-highlight));
   }
   

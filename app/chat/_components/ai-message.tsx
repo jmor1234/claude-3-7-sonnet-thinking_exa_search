@@ -107,7 +107,8 @@ export function AIMessage({ message }: AIMessageProps) {
                   className={cn(
                     "glass-card max-w-[85%]",
                     "px-6 py-4",
-                    "mb-3 last:mb-0"
+                    "mb-3 last:mb-0",
+                    "shadow-lg"
                   )}
                   whileHover={{
                     y: -2,
@@ -118,7 +119,7 @@ export function AIMessage({ message }: AIMessageProps) {
                     content={cleanedText}
                     className={cn(
                       "text-[15.5px] tracking-[-0.01em]",
-                      "selection:bg-primary/15"
+                      "selection:bg-primary/15 font-normal text-foreground/90 dark:text-foreground/95"
                     )}
                     isUser={false}
                   />
@@ -142,7 +143,7 @@ export function AIMessage({ message }: AIMessageProps) {
           
           {finalResponse && (
             <motion.div 
-              className="glass-card max-w-[85%] px-6 py-4 mb-3 last:mb-0"
+              className="glass-card max-w-[85%] px-6 py-4 mb-3 last:mb-0 shadow-lg"
               whileHover={{
                 y: -2,
                 boxShadow: "0 16px 30px -12px rgba(0,0,0,0.1), 0 4px 8px -2px rgba(0,0,0,0.05), inset 0 1px 0 0 rgba(255,255,255,0.1)"
@@ -152,7 +153,7 @@ export function AIMessage({ message }: AIMessageProps) {
                 content={finalResponse}
                 className={cn(
                   "text-[15.5px] tracking-[-0.01em]",
-                  "selection:bg-primary/15"
+                  "selection:bg-primary/15 font-normal text-foreground/90 dark:text-foreground/95"
                 )}
                 isUser={false}
               />
