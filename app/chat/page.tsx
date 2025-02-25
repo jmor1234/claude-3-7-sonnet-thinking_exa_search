@@ -210,7 +210,7 @@ export default function ChatPage() {
               transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="text-sm mt-1 opacity-70 text-center max-w-md"
             >
-              Experience Claude's advanced reasoning and contextual understanding capabilities
+              Experience Claude&apos;s advanced reasoning and contextual understanding capabilities
             </motion.p>
           </motion.div>
         ) : (
