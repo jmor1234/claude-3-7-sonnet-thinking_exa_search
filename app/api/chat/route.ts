@@ -42,7 +42,6 @@ export async function POST(req: Request) {
       console.log(`\n📊 Step ${stepCounter} Finished:`);
       console.log('🏁 Finish Reason:', finishReason);
       console.log('💭 Reasoning:', reasoning);
-      console.log('💭 Reasoning Details:', reasoningDetails);
 
       console.log('💬 Model Response:', text);
       
