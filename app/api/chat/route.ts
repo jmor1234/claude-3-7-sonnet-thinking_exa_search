@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     experimental_transform: smoothStream(),
     maxSteps: 6,
     toolChoice: 'auto',
-    onStepFinish: ({ toolCalls, toolResults, finishReason, usage, text, reasoning, reasoningDetails }) => {
+    onStepFinish: ({ toolCalls, toolResults, finishReason, usage, text, reasoning }) => {
       stepCounter++;
       console.log(`\n📊 Step ${stepCounter} Finished:`);
       console.log('🏁 Finish Reason:', finishReason);

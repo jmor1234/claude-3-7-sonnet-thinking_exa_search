@@ -31,7 +31,7 @@ function getTimeZoneAbbreviation(timeZone: string): string {
       .find(part => part.type === 'timeZoneName')?.value || '';
     
     return shortTimeZone;
-  } catch (error) {
+  } catch {
     // Fallback if there's an error getting the abbreviation
     return timeZone.split('/').pop() || '';
   }
