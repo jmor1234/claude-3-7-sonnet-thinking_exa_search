@@ -22,60 +22,61 @@ type ReasoningUIPart = {
 }
 
 const messageVariants = {
-  initial: { opacity: 0, y: 10, scale: 0.98 },
+  initial: { opacity: 0, y: 15, scale: 0.97 },
   animate: { 
     opacity: 1, 
     y: 0, 
     scale: 1, 
     transition: { 
-      duration: 0.4, 
-      y: { type: "spring", stiffness: 100, damping: 15 },
-      scale: { duration: 0.25, ease: "easeOut" },
-      opacity: { duration: 0.3 }
+      duration: 0.5, 
+      y: { type: "spring", stiffness: 80, damping: 15 },
+      scale: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+      opacity: { duration: 0.4 }
     } 
   },
   exit: { 
     opacity: 0, 
-    y: -10, 
-    scale: 0.98, 
+    y: -15, 
+    scale: 0.97, 
     transition: { 
-      duration: 0.25, 
-      ease: "easeIn" 
+      duration: 0.35, 
+      ease: [0.32, 0.72, 0, 1]
     } 
   },
 }
 
 const containerVariants = {
-  initial: { opacity: 0, scale: 0.98 },
+  initial: { opacity: 0, scale: 0.97 },
   animate: { 
     opacity: 1, 
     scale: 1, 
     transition: { 
-      duration: 0.4,
-      staggerChildren: 0.1
+      duration: 0.6,
+      staggerChildren: 0.15,
+      ease: [0.16, 1, 0.3, 1]
     } 
   },
 }
 
-// Add new loading animation variants
+// Enhanced loading animation variants
 const loadingVariants = {
-  initial: { opacity: 0, scale: 0.95, y: 10 },
+  initial: { opacity: 0, scale: 0.92, y: 15 },
   animate: { 
     opacity: 1, 
     scale: 1, 
     y: 0,
     transition: {
-      duration: 0.4,
-      ease: "easeOut"
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1]
     }
   },
   exit: { 
     opacity: 0, 
-    scale: 0.95, 
-    y: -10,
+    scale: 0.92, 
+    y: -15,
     transition: {
-      duration: 0.3,
-      ease: "easeIn"
+      duration: 0.35,
+      ease: [0.32, 0.72, 0, 1]
     }
   }
 }
@@ -138,14 +139,26 @@ export default function ChatPage() {
       variants={containerVariants}
       initial="initial"
       animate="animate"
-      className="min-h-[calc(100vh-48px)] flex flex-col pt-12 bg-gradient-to-b from-background via-background/98 to-background/95 bg-[radial-gradient(#00000004_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff02_1px,transparent_1px)] bg-[size:24px_24px]"
+      className={cn(
+        "min-h-[calc(100vh-48px)] flex flex-col pt-14",
+        "bg-gradient-to-b from-background/90 via-background/95 to-background/90",
+        "relative overflow-hidden"
+      )}
     >
+      {/* Premium background effects */}
+      <div className="absolute inset-0 z-[-1] bg-[radial-gradient(#00000002_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff01_1px,transparent_1px)] bg-[size:32px_32px]" />
+      <div className="absolute inset-0 z-[-2] opacity-30 bg-[linear-gradient(to_right,transparent_0%,rgba(var(--primary-rgb),0.05)_50%,transparent_100%)]" style={{"--primary-rgb": "var(--primary)".replace("hsl(", "").replace(")", "").split(" ")[0]} as React.CSSProperties} />
+      <div className="absolute inset-0 z-[-3] opacity-60">
+        <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[35%] rounded-full bg-primary/[0.02] filter blur-[80px]" />
+        <div className="absolute bottom-[-5%] left-[-10%] w-[50%] h-[40%] rounded-full bg-primary/[0.01] filter blur-[100px]" />
+      </div>
+      
       <ScrollArea 
         className={cn(
           "flex-grow px-4 md:px-6 lg:px-8 py-6 custom-scrollbar",
-          "transition-opacity duration-300",
+          "transition-opacity duration-500 ease-in-out",
           "max-w-5xl mx-auto w-full",
-          isLoading && !isStreaming && "opacity-50"
+          isLoading && !isStreaming && "opacity-40"
         )} 
         onScroll={handleScroll}
       >
@@ -154,19 +167,54 @@ export default function ChatPage() {
             variants={messageVariants}
             className="flex flex-col items-center justify-center h-[70vh] text-muted-foreground"
           >
-            <div className={cn(
-              "flex items-center justify-center w-16 h-16 mb-6 rounded-full",
-              "bg-background/50 backdrop-blur-sm",
-              "shadow-[0_8px_16px_-6px_rgba(0,0,0,0.1),inset_0_1px_0_0_rgba(255,255,255,0.1)]",
-              "border border-neutral-200/10 dark:border-neutral-700/30"
-            )}>
-              <MessageSquare className="h-8 w-8 opacity-50 text-primary/50" />
-            </div>
-            <p className="text-base">Start a conversation with Claude 3.7 Sonnet...</p>
-            <p className="text-sm mt-2 opacity-70">Type a message below to the best model in the world</p>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: 0.2,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              className={cn(
+                "flex items-center justify-center w-20 h-20 mb-10 rounded-3xl",
+                "glass-panel-elevated backdrop-blur-2xl frost-effect",
+                "shadow-[0_18px_35px_-8px_rgba(0,0,0,0.1),inset_0_1px_0_0_rgba(255,255,255,0.1)]",
+                "border border-neutral-200/15 dark:border-neutral-700/25",
+                "transition-all duration-500 ease-out"
+              )}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 150,
+                  damping: 15,
+                  delay: 0.4
+                }}
+                className="p-5 flex items-center justify-center"
+              >
+                <MessageSquare className="h-10 w-10 opacity-50 text-primary/40 animate-shimmer" />
+              </motion.div>
+            </motion.div>
+            <motion.h2 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="text-xl mb-3 font-medium text-gradient animate-shimmer"
+            >
+              Start a conversation with Claude 3.7 Sonnet
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="text-sm mt-1 opacity-70 text-center max-w-md"
+            >
+              Experience Claude's advanced reasoning and contextual understanding capabilities
+            </motion.p>
           </motion.div>
         ) : (
-          <div className="space-y-8 pb-24">
+          <div className="space-y-10 pb-28">
             <AnimatePresence initial={false} mode="popLayout">
               {messages.map((message) => (
                 <motion.div
@@ -182,8 +230,8 @@ export default function ChatPage() {
                 >
                   {message.role === "user" ? (
                     <motion.div 
-                      className="user-glass-card max-w-[85%] md:max-w-[75%] px-5 py-3.5 shadow-lg"
-                      whileHover={{ y: -2, boxShadow: "0 14px 28px -8px rgba(0,0,0,0.15), inset 0 1px 0 0 rgba(255,255,255,0.1)"}}
+                      className="user-glass-card max-w-[85%] md:max-w-[75%] px-5 py-4 shadow-lg"
+                      whileHover={{ y: -3, boxShadow: "0 24px 45px -12px rgba(0,0,0,0.14), inset 0 1px 0 0 rgba(255,255,255,0.08)"}}
                     >
                       <MarkdownContent 
                         content={message.content}
@@ -214,25 +262,37 @@ export default function ChatPage() {
                 className="flex justify-start"
               >
                 <div className={cn(
-                  "flex items-center gap-3 text-muted-foreground",
-                  "glass-panel rounded-full pl-3 pr-4 py-2.5",
+                  "flex items-center gap-3.5 text-muted-foreground",
+                  "glass-panel rounded-full pl-4 pr-5 py-3",
                   "animate-gentle-pulse"
                 )}>
                   <div className={cn(
-                    "flex items-center justify-center h-6 w-6 rounded-full",
-                    "bg-primary/20 backdrop-blur-md",
-                    "border border-primary/30",
-                    "shadow-[0_0_10px_-2px] shadow-primary/20"
+                    "flex items-center justify-center h-7 w-7 rounded-full",
+                    "bg-primary/15 backdrop-blur-2xl",
+                    "border border-primary/20",
+                    "shadow-[0_0_20px_-2px] shadow-primary/15"
                   )}>
-                    <Sparkles className="h-3.5 w-3.5 text-primary" />
+                    <Sparkles className="h-4 w-4 text-primary animate-shimmer" />
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <div className="flex gap-1">
-                      <span className="h-1.5 w-1.5 rounded-full bg-primary/40 animate-bounce [animation-delay:-0.3s]" />
-                      <span className="h-1.5 w-1.5 rounded-full bg-primary/40 animate-bounce [animation-delay:-0.15s]" />
-                      <span className="h-1.5 w-1.5 rounded-full bg-primary/40 animate-bounce" />
+                  <div className="flex items-center gap-3">
+                    <div className="flex gap-2">
+                      <motion.span
+                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: 0 }}
+                        className="h-2 w-2 rounded-full bg-primary/50 shadow-[0_0_10px_-1px] shadow-primary/30"
+                      />
+                      <motion.span
+                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
+                        className="h-2 w-2 rounded-full bg-primary/50 shadow-[0_0_10px_-1px] shadow-primary/30"
+                      />
+                      <motion.span
+                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.6 }}
+                        className="h-2 w-2 rounded-full bg-primary/50 shadow-[0_0_10px_-1px] shadow-primary/30"
+                      />
                     </div>
-                    <span className="text-sm font-medium text-gradient">Thinking...</span>
+                    <span className="text-sm font-medium text-gradient animate-shimmer">Claude is thinking...</span>
                   </div>
                 </div>
               </motion.div>
@@ -242,10 +302,12 @@ export default function ChatPage() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className={cn(
-                  "p-4 text-sm text-center text-destructive",
-                  "bg-destructive/10 rounded-lg",
-                  "glass-panel border border-destructive/30"
+                  "p-5 text-sm text-center text-destructive",
+                  "bg-destructive/8 rounded-xl frost-effect",
+                  "glass-panel border border-destructive/25",
+                  "shadow-[0_15px_40px_-15px_rgba(220,38,38,0.2)]"
                 )}
               >
                 {error.message}
@@ -256,8 +318,8 @@ export default function ChatPage() {
           </div>
         )}
       </ScrollArea>
-      <div className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-xl border-t border-neutral-200/20 dark:border-neutral-800/30">
-        <div className="max-w-5xl mx-auto w-full px-4 md:px-6 lg:px-8 py-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-background/60 backdrop-blur-2xl border-t border-neutral-200/10 dark:border-neutral-800/15">
+        <div className="max-w-5xl mx-auto w-full px-4 md:px-6 lg:px-8 py-5">
           <ChatInput
             input={input}
             handleInputChange={handleInputChange}
