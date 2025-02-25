@@ -13,9 +13,10 @@ interface MarkdownContentProps {
   content: string
   className?: string
   isUser?: boolean
+  isReasoning?: boolean
 }
 
-export function MarkdownContent({ content, className, isUser }: MarkdownContentProps) {
+export function MarkdownContent({ content, className, isUser, isReasoning }: MarkdownContentProps) {
   return (
     <div className={cn(
       "prose prose-sm max-w-none",
@@ -31,25 +32,39 @@ export function MarkdownContent({ content, className, isUser }: MarkdownContentP
       "prose-blockquote:border-l-2 prose-blockquote:pl-6 prose-blockquote:my-6 prose-blockquote:italic",
       "[&_sup]:text-xs [&_sup]:ml-0.5",
       "[&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
-      isUser 
+      isReasoning
         ? [
-            "prose-invert",
-            "prose-p:text-primary-foreground/90",
-            "prose-a:text-primary-foreground/90 prose-a:hover:text-primary-foreground prose-a:font-medium",
-            "prose-code:bg-primary-foreground/20",
-            "prose-li:text-primary-foreground/90",
-            "prose-headings:text-primary-foreground",
-            "prose-blockquote:border-primary-foreground/30"
-          ]
-        : [
             "dark:prose-invert",
-            "prose-p:text-foreground/90",
-            "prose-a:text-foreground/90 prose-a:hover:text-foreground prose-a:font-medium",
-            "prose-code:bg-muted",
-            "prose-li:text-foreground/90",
-            "prose-headings:text-foreground",
-            "prose-blockquote:border-border"
-          ],
+            "prose-p:text-muted-foreground/80",
+            "prose-p:leading-normal prose-p:mb-2 prose-p:mt-0",
+            "prose-a:text-muted-foreground/80 prose-a:hover:text-muted-foreground prose-a:font-normal",
+            "prose-code:bg-muted/20",
+            "prose-li:text-muted-foreground/80 prose-li:my-1",
+            "prose-ol:my-2 prose-ol:pl-8",
+            "prose-ul:my-2 prose-ul:pl-6",
+            "prose-headings:text-muted-foreground/90 prose-headings:my-3 prose-headings:mb-2",
+            "prose-blockquote:border-muted prose-blockquote:my-3 prose-blockquote:py-1",
+            "[&>*]:my-2"
+          ]
+        : isUser 
+          ? [
+              "prose-invert",
+              "prose-p:text-foreground prose-p:font-medium",
+              "prose-a:text-foreground prose-a:hover:text-foreground prose-a:font-medium",
+              "prose-code:bg-foreground/20",
+              "prose-li:text-foreground",
+              "prose-headings:text-foreground",
+              "prose-blockquote:border-foreground/30"
+            ]
+          : [
+              "dark:prose-invert",
+              "prose-p:text-foreground/90",
+              "prose-a:text-foreground/90 prose-a:hover:text-foreground prose-a:font-medium",
+              "prose-code:bg-muted",
+              "prose-li:text-foreground/90",
+              "prose-headings:text-foreground",
+              "prose-blockquote:border-border"
+            ],
       className
     )}>
       <ReactMarkdown
@@ -78,7 +93,9 @@ export function MarkdownContent({ content, className, isUser }: MarkdownContentP
             ) : (
               <code {...rest} className={cn(
                 "bg-muted/50 px-1.5 py-0.5 rounded font-mono text-sm",
-                isUser ? "text-primary-foreground" : "text-foreground"
+                isUser ? "text-primary-foreground font-medium bg-primary/10" : 
+                isReasoning ? "text-muted-foreground/80 bg-muted/20" : 
+                "text-foreground"
               )}>
                 {children}
               </code>
@@ -112,16 +129,28 @@ export function MarkdownContent({ content, className, isUser }: MarkdownContentP
             );
           },
           ul: ({ ...props }) => (
-            <ul className="my-2 ml-4 list-disc space-y-1" {...props} />
+            <ul className={cn(
+              "my-2 ml-4 list-disc space-y-1",
+              isReasoning && "space-y-0.5"
+            )} {...props} />
           ),
           ol: ({ ...props }) => (
-            <ol className="my-2 ml-4 list-decimal space-y-1" {...props} />
+            <ol className={cn(
+              "my-2 ml-4 list-decimal space-y-1",
+              isReasoning && "ml-0 pl-7 list-outside"
+            )} {...props} />
           ),
           p: ({ ...props }) => (
-            <p className="mb-2 last:mb-0 leading-relaxed" {...props} />
+            <p className={cn(
+              "mb-2 last:mb-0 leading-relaxed",
+              isReasoning && "leading-normal mb-1.5"
+            )} {...props} />
           ),
           li: ({ ...props }) => (
-            <li className="relative pl-2" {...props} />
+            <li className={cn(
+              "relative pl-2",
+              isReasoning && "pl-1 ml-0"
+            )} {...props} />
           ),
           h1: ({ ...props }) => (
             <h1 className="border-b pb-2 border-border/40" {...props} />

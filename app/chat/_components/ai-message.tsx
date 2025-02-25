@@ -34,9 +34,24 @@ interface AIMessageProps {
 }
 
 const messageVariants = {
-  initial: { opacity: 0, y: 10 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -10 }
+  initial: { opacity: 0, y: 10, scale: 0.98 },
+  animate: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: { 
+      duration: 0.3,
+      opacity: { duration: 0.4 },
+      y: { type: "spring", stiffness: 100, damping: 15 },
+      scale: { duration: 0.25, ease: "easeOut" }
+    }
+  },
+  exit: { 
+    opacity: 0, 
+    y: -10, 
+    scale: 0.98,
+    transition: { duration: 0.25, ease: "easeIn" }
+  }
 };
 
 // Function to clean any possible remaining source tags from text content
@@ -63,8 +78,7 @@ export function AIMessage({ message }: AIMessageProps) {
       initial="initial"
       animate="animate"
       exit="exit"
-      transition={{ duration: 0.2 }}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-6 ml-1 py-2"
     >
       {/* Handle message parts if they exist */}
       {safeParts && safeParts.length > 0 ? (
@@ -85,18 +99,20 @@ export function AIMessage({ message }: AIMessageProps) {
               const cleanedText = cleanSourceTags(part.text);
               
               return (
-                <div 
+                <motion.div
                   key={`text-${index}`}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: 0.05 }}
                   className={cn(
-                    "bg-card text-card-foreground rounded-[22px] px-6 py-4 max-w-[85%]",
-                    "hover:bg-card/98 transition-all duration-300 ease-out",
-                    "shadow-[0_2px_12px_-3px_rgba(0,0,0,0.08),0_2px_4px_-1px_rgba(0,0,0,0.04)]", 
-                    "hover:shadow-[0_4px_16px_-4px_rgba(0,0,0,0.12),0_2px_6px_-1px_rgba(0,0,0,0.08)]",
-                    "border border-border/10",
-                    "mb-5 last:mb-0",
-                    "backdrop-blur-sm",
-                    "dark:bg-card/95 dark:hover:bg-card/98"
+                    "glass-card max-w-[85%]",
+                    "px-6 py-4",
+                    "mb-3 last:mb-0"
                   )}
+                  whileHover={{
+                    y: -2,
+                    boxShadow: "0 16px 30px -12px rgba(0,0,0,0.1), 0 4px 8px -2px rgba(0,0,0,0.05), inset 0 1px 0 0 rgba(255,255,255,0.1)"
+                  }}
                 >
                   <MarkdownContent 
                     content={cleanedText}
@@ -106,7 +122,7 @@ export function AIMessage({ message }: AIMessageProps) {
                     )}
                     isUser={false}
                   />
-                </div>
+                </motion.div>
               );
             }
             
@@ -117,7 +133,7 @@ export function AIMessage({ message }: AIMessageProps) {
         // Fall back to legacy parsing for backward compatibility
         <>
           {reasoning.length > 0 && (
-            <div className="space-y-2">
+            <div className="space-y-4">
               {reasoning.map((block, index) => (
                 <ReasoningBlockComponent key={`${block.type}-${block.iteration}-${index}`} block={block} />
               ))}
@@ -125,16 +141,13 @@ export function AIMessage({ message }: AIMessageProps) {
           )}
           
           {finalResponse && (
-            <div className={cn(
-              "bg-card text-card-foreground rounded-[22px] px-6 py-4 max-w-[85%]",
-              "hover:bg-card/98 transition-all duration-300 ease-out",
-              "shadow-[0_2px_12px_-3px_rgba(0,0,0,0.08),0_2px_4px_-1px_rgba(0,0,0,0.04)]", 
-              "hover:shadow-[0_4px_16px_-4px_rgba(0,0,0,0.12),0_2px_6px_-1px_rgba(0,0,0,0.08)]",
-              "border border-border/10",
-              "mb-5 last:mb-0",
-              "backdrop-blur-sm",
-              "dark:bg-card/95 dark:hover:bg-card/98"
-            )}>
+            <motion.div 
+              className="glass-card max-w-[85%] px-6 py-4 mb-3 last:mb-0"
+              whileHover={{
+                y: -2,
+                boxShadow: "0 16px 30px -12px rgba(0,0,0,0.1), 0 4px 8px -2px rgba(0,0,0,0.05), inset 0 1px 0 0 rgba(255,255,255,0.1)"
+              }}
+            >
               <MarkdownContent 
                 content={finalResponse}
                 className={cn(
@@ -143,16 +156,21 @@ export function AIMessage({ message }: AIMessageProps) {
                 )}
                 isUser={false}
               />
-            </div>
+            </motion.div>
           )}
         </>
       )}
 
       {/* Display sources if available */}
       {sources.length > 0 && (
-        <div className="mt-2">
+        <motion.div 
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="mt-3"
+        >
           <SourceBlock sources={sources} />
-        </div>
+        </motion.div>
       )}
     </motion.div>
   );

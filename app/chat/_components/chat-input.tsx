@@ -47,19 +47,18 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
       onSubmit={handleSubmit}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 25 }}
       className={cn(
-        "relative flex items-end gap-2 w-full",
-        "before:absolute before:inset-0 before:bg-gradient-to-t before:from-background/90 before:to-background/50 before:backdrop-blur-[12px]",
-        "before:rounded-[28px] before:-z-10",
-        "border border-border/30",
-        "rounded-[28px] transition-all duration-300",
-        "shadow-[0_0_0_1px_rgba(0,0,0,0.02),0_2px_4px_-2px_rgba(0,0,0,0.02)]",
-        "hover:shadow-[0_0_0_1px_rgba(0,0,0,0.03),0_4px_8px_-4px_rgba(0,0,0,0.04)]",
-        "focus-within:shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_4px_12px_-4px_rgba(0,0,0,0.06)]",
-        "dark:shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_2px_4px_-2px_rgba(0,0,0,0.04)]",
-        "dark:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_4px_8px_-4px_rgba(0,0,0,0.06)]",
-        "dark:focus-within:shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_4px_12px_-4px_rgba(0,0,0,0.08)]"
+        "relative flex items-end gap-2 w-full glass-input",
+        "backdrop-blur-xl",
+        "border border-glass-border",
+        "rounded-[28px] transition-all duration-300 ease-out",
+        "shadow-[0_10px_30px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.05)]",
+        "hover:shadow-[0_14px_40px_-5px_rgba(0,0,0,0.12),0_10px_15px_-3px_rgba(0,0,0,0.07)]",
+        "focus-within:shadow-[0_18px_50px_-6px_rgba(0,0,0,0.15),0_12px_20px_-6px_rgba(0,0,0,0.1)]",
+        "dark:shadow-[0_10px_30px_-5px_rgba(0,0,0,0.2),0_4px_10px_-3px_rgba(0,0,0,0.1)]",
+        "dark:hover:shadow-[0_16px_45px_-5px_rgba(0,0,0,0.25),0_8px_15px_-6px_rgba(0,0,0,0.15)]",
+        "dark:focus-within:shadow-[0_20px_60px_-6px_rgba(0,0,0,0.3),0_12px_25px_-10px_rgba(0,0,0,0.15)]"
       )}
     >
       <div className="pl-3.5 pb-2.5">
@@ -77,11 +76,11 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
               size="sm"
               variant="ghost"
               className={cn(
-                "rounded-[22px] h-11",
-                "bg-muted/50 hover:bg-muted",
+                "glass-button h-11",
+                "bg-muted/30 hover:bg-muted/50",
                 "transition-all duration-300",
                 "hover:scale-105 active:scale-95",
-                "shadow-[0_1px_2px_-1px_rgba(0,0,0,0.02)] hover:shadow-[0_2px_4px_-2px_rgba(0,0,0,0.04)]",
+                "shadow-[0_4px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_6px_14px_-6px_rgba(0,0,0,0.08)]",
                 "flex items-center gap-2",
                 "px-3 sm:px-4"
               )}
@@ -117,7 +116,7 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
                   <motion.span 
                     className={cn(
                       "text-lg font-medium",
-                      "bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent",
+                      "text-gradient",
                       "tracking-wide"
                     )}
                     animate={{ 
@@ -238,24 +237,18 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
               size="icon"
               variant="ghost"
               className={cn(
-                "rounded-[22px] h-11 w-11",
-                "bg-primary/5 hover:bg-primary/8",
-                "transition-all duration-300",
-                "hover:scale-105 active:scale-95",
+                "glass-button h-11 w-11",
+                "bg-primary/5 hover:bg-primary/10",
                 "disabled:opacity-40 disabled:hover:bg-primary/5 disabled:hover:scale-100",
-                "shadow-[0_1px_2px_-1px_rgba(0,0,0,0.02)] hover:shadow-[0_2px_4px_-2px_rgba(0,0,0,0.04)]",
                 isLoading && "animate-pulse"
               )}
             >
               <Send className={cn(
-                "h-4 w-4",
-                "transition-transform duration-200",
-                "text-primary/60",
-                !isLoading && input.trim() && "text-primary/90"
+                "h-4 w-4 text-primary/80",
+                "transition-transform duration-200 ease-out",
+                "group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               )} />
-              <span className="sr-only">
-                {isLoading ? "Sending..." : "Send message"}
-              </span>
+              <span className="sr-only">Send message</span>
             </Button>
           </motion.div>
         </AnimatePresence>
