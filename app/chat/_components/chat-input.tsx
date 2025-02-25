@@ -49,17 +49,17 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, type: "spring", stiffness: 250, damping: 25 }}
       className={cn(
-        "relative flex items-center gap-2 w-full glass-input frost-effect",
-        "backdrop-blur-xl",
-        "border border-glass-border",
-        "rounded-[32px] transition-all duration-500 ease-out",
-        "shadow-[0_20px_45px_-10px_rgba(0,0,0,0.08),0_12px_20px_-10px_rgba(0,0,0,0.04)]",
-        "hover:shadow-[0_25px_50px_-10px_rgba(0,0,0,0.1),0_15px_25px_-10px_rgba(0,0,0,0.06)]",
-        "focus-within:shadow-[0_30px_65px_-12px_rgba(0,0,0,0.12),0_18px_35px_-10px_rgba(0,0,0,0.08)]",
-        "dark:shadow-[0_20px_45px_-10px_rgba(0,0,0,0.2),0_8px_20px_-7px_rgba(0,0,0,0.12)]",
-        "dark:hover:shadow-[0_28px_60px_-10px_rgba(0,0,0,0.25),0_15px_30px_-10px_rgba(0,0,0,0.18)]",
-        "dark:focus-within:shadow-[0_35px_75px_-12px_rgba(0,0,0,0.3),0_20px_40px_-15px_rgba(0,0,0,0.2)]",
-        "py-3"
+        "relative flex items-center gap-2 w-full glass-input",
+        "backdrop-blur-2xl",
+        "border border-glass-border/70",
+        "rounded-[28px] transition-all duration-500 ease-out",
+        "shadow-[0_15px_35px_-12px_rgba(0,0,0,0.04)]",
+        "hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.06)]",
+        "focus-within:shadow-[0_25px_55px_-12px_rgba(0,0,0,0.08)]",
+        "dark:shadow-[0_15px_35px_-10px_rgba(0,0,0,0.15)]",
+        "dark:hover:shadow-[0_22px_50px_-10px_rgba(0,0,0,0.2)]",
+        "dark:focus-within:shadow-[0_28px_65px_-12px_rgba(0,0,0,0.25)]",
+        "py-2.5"
       )}
     >
       <div className="pl-4">
@@ -77,17 +77,17 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
               size="sm"
               variant="ghost"
               className={cn(
-                "glass-button h-12 frost-effect",
-                "bg-muted/15 hover:bg-muted/35",
+                "glass-button h-10 frost-effect",
+                "bg-muted/10 hover:bg-muted/20",
                 "transition-all duration-400",
-                "hover:scale-105 active:scale-95",
-                "shadow-[0_8px_20px_-6px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_-8px_rgba(0,0,0,0.06)]",
-                "flex items-center gap-2.5",
-                "px-4 sm:px-5"
+                "hover:scale-103 active:scale-97",
+                "shadow-[0_6px_16px_-6px_rgba(0,0,0,0.04)] hover:shadow-[0_10px_20px_-8px_rgba(0,0,0,0.06)]",
+                "flex items-center gap-2",
+                "px-3.5 sm:px-4"
               )}
             >
               <PlusCircle className="h-4 w-4 text-muted-foreground/60" />
-              <span className="hidden sm:inline text-sm font-medium text-muted-foreground/80">New Chat</span>
+              <span className="hidden sm:inline text-sm font-medium text-muted-foreground/70">New Chat</span>
               <span className="sr-only sm:hidden">New Chat</span>
             </Button>
           </motion.div>
@@ -103,94 +103,34 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="flex items-center justify-center py-3 h-12 w-full"
+              className="flex items-center justify-center py-2.5 h-10 w-full"
             >
-              <div className="flex items-center gap-4 text-muted-foreground">
+              <div className="flex items-center gap-3 text-muted-foreground/80">
                 <div className={cn(
-                  "flex items-center justify-center h-8 w-8 rounded-full",
-                  "bg-gradient-to-br from-primary/25 to-primary/5",
-                  "shadow-[0_0_20px_-3px] shadow-primary/20",
-                  "ring-1 ring-primary/20 animate-shimmer"
+                  "flex items-center justify-center h-6 w-6 rounded-full",
+                  "bg-primary/10 backdrop-blur-3xl",
+                  "border border-primary/15",
+                  "shadow-[0_0_15px_-2px] shadow-primary/10"
                 )}>
-                  <Sparkles className="h-4 w-4 text-primary animate-[pulse_3s_cubic-bezier(0.4,0,0.2,1)_infinite]" />
+                  <Sparkles className="h-3.5 w-3.5 text-primary/80 animate-shimmer" />
                 </div>
-                <div className="flex items-center gap-3">
+                <span className="text-sm font-normal text-gradient animate-shimmer opacity-90">Thinking...</span>
+                <div className="flex gap-1 ml-1">
                   <motion.span 
-                    className={cn(
-                      "text-lg font-medium",
-                      "text-gradient",
-                      "tracking-wide"
-                    )}
-                    animate={{ 
-                      opacity: [0.7, 1, 0.7],
-                      scale: [0.99, 1.01, 0.99],
-                      filter: [
-                        "brightness(0.95)",
-                        "brightness(1.1)",
-                        "brightness(0.95)"
-                      ]
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    Claude 3.7 Sonnet is thinking carefully
-                  </motion.span>
-                  <div className="flex gap-1.5 ml-1">
-                    <motion.span 
-                      className={cn(
-                        "h-2 w-2 rounded-full",
-                        "bg-gradient-to-br from-primary/60 to-primary/25",
-                        "shadow-[0_0_10px_-1px] shadow-primary/30"
-                      )}
-                      animate={{ 
-                        scale: [1, 1.5, 1],
-                        opacity: [0.7, 1, 0.7]
-                      }}
-                      transition={{ 
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 0 
-                      }}
-                    />
-                    <motion.span 
-                      className={cn(
-                        "h-2 w-2 rounded-full",
-                        "bg-gradient-to-br from-primary/60 to-primary/25",
-                        "shadow-[0_0_10px_-1px] shadow-primary/30"
-                      )}
-                      animate={{ 
-                        scale: [1, 1.5, 1],
-                        opacity: [0.7, 1, 0.7]
-                      }}
-                      transition={{ 
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 0.3 
-                      }}
-                    />
-                    <motion.span 
-                      className={cn(
-                        "h-2 w-2 rounded-full",
-                        "bg-gradient-to-br from-primary/60 to-primary/25",
-                        "shadow-[0_0_10px_-1px] shadow-primary/30"
-                      )}
-                      animate={{ 
-                        scale: [1, 1.5, 1],
-                        opacity: [0.7, 1, 0.7]
-                      }}
-                      transition={{ 
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 0.6 
-                      }}
-                    />
-                  </div>
+                    className="h-1.5 w-1.5 rounded-full bg-primary/40 shadow-[0_0_8px_-1px] shadow-primary/20"
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.6, 0.9, 0.6] }}
+                    transition={{ duration: 1.5, repeat: Infinity, delay: 0 }}
+                  />
+                  <motion.span 
+                    className="h-1.5 w-1.5 rounded-full bg-primary/40 shadow-[0_0_8px_-1px] shadow-primary/20"
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.6, 0.9, 0.6] }}
+                    transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
+                  />
+                  <motion.span 
+                    className="h-1.5 w-1.5 rounded-full bg-primary/40 shadow-[0_0_8px_-1px] shadow-primary/20"
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.6, 0.9, 0.6] }}
+                    transition={{ duration: 1.5, repeat: Infinity, delay: 0.6 }}
+                  />
                 </div>
               </div>
             </motion.div>
@@ -210,13 +150,13 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
                 onKeyDown={handleKeyPress}
                 placeholder="Message Claude 3.7 Sonnet..."
                 className={cn(
-                  "w-full py-3 px-4",
+                  "w-full py-2.5 px-4",
                   "text-base bg-transparent border-0 resize-none",
-                  "placeholder:text-muted-foreground/30",
-                  "focus:placeholder:opacity-10",
+                  "placeholder:text-muted-foreground/25",
+                  "focus:placeholder:opacity-0",
                   "focus-visible:ring-0 focus-visible:ring-offset-0 rounded-lg",
-                  "transition duration-400 ease-out",
-                  "max-h-[200px] min-h-[48px]",
+                  "transition duration-300 ease-out",
+                  "max-h-[200px] min-h-[45px]",
                   "leading-normal",
                   "align-middle flex items-center"
                 )}
@@ -244,15 +184,15 @@ export function ChatInput({ input, handleInputChange, handleSubmit, isLoading, o
               size="icon"
               variant="ghost"
               className={cn(
-                "glass-button frost-effect h-12 w-12",
-                "bg-primary/5 hover:bg-primary/15",
+                "glass-button frost-effect h-10 w-10",
+                "bg-primary/5 hover:bg-primary/10",
                 "disabled:opacity-40 disabled:hover:bg-primary/5 disabled:hover:scale-100",
                 isLoading && "animate-gentle-pulse"
               )}
             >
               <Send className={cn(
-                "h-4.5 w-4.5 text-primary/90",
-                "transition-transform duration-400 ease-out",
+                "h-4 w-4 text-primary/80",
+                "transition-transform duration-300 ease-out",
                 "group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               )} />
               <span className="sr-only">Send message</span>

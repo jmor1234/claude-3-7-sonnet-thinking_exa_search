@@ -37,24 +37,24 @@ body {
     --radius: 0.5rem;
 
     /* Refined glass morphism variables with ultra-subtle values */
-    --glass-background: 210 20% 98% / 0.05;
-    --glass-border: 210 30% 70% / 0.08;
-    --glass-highlight: 0 0% 100% / 0.10;
-    --glass-shadow: 220 60% 40% / 0.08;
+    --glass-background: 210 20% 98% / 0.03;
+    --glass-border: 210 30% 70% / 0.05;
+    --glass-highlight: 0 0% 100% / 0.08;
+    --glass-shadow: 220 60% 40% / 0.05;
     
-    /* Refined AI message bubble variables - even more subtle, elegant tones */
-    --chat-bubble-bg: 220 30% 95% / 0.85;
-    --chat-bubble-border: 220 30% 85% / 0.4;
-    --chat-bubble-shadow: 220 40% 2% / 0.08;
+    /* Refined AI message bubble variables */
+    --chat-bubble-bg: 220 30% 95% / 0.75;
+    --chat-bubble-border: 220 30% 85% / 0.25;
+    --chat-bubble-shadow: 220 40% 2% / 0.05;
     
-    /* Refined user message bubble variables - more elegant blue gradient */
-    --user-bubble-bg: 221 90% 95% / 0.8;
-    --user-bubble-gradient: linear-gradient(135deg, hsla(221, 83%, 95%, 0.85), hsla(230, 83%, 92%, 0.75));
-    --user-bubble-border: 221 83% 80% / 0.35;
+    /* Refined user message bubble variables */
+    --user-bubble-bg: 221 90% 95% / 0.7;
+    --user-bubble-gradient: linear-gradient(135deg, hsla(221, 83%, 95%, 0.75), hsla(230, 83%, 92%, 0.65));
+    --user-bubble-border: 221 83% 80% / 0.25;
     --user-bubble-shadow: 221 60% 40% / 0.10;
     
     /* Noise texture */
-    --noise-opacity: 0.015;
+    --noise-opacity: 0.01;
   }
   .dark {
     --background: 222.2 84% 4.9%;
@@ -83,24 +83,24 @@ body {
     --chart-5: 340 75% 55%;
 
     /* Refined glass morphism variables for dark mode */
-    --glass-background: 222 84% 4.9% / 0.15;
-    --glass-border: 230 40% 50% / 0.06;
-    --glass-highlight: 217 91% 60% / 0.04;
-    --glass-shadow: 220 40% 2% / 0.15;
+    --glass-background: 222 84% 4.9% / 0.10;
+    --glass-border: 230 40% 50% / 0.04;
+    --glass-highlight: 217 91% 60% / 0.03;
+    --glass-shadow: 220 40% 2% / 0.10;
     
     /* Refined AI message bubble variables for dark mode */
-    --chat-bubble-bg: 217 25% 10% / 0.7;
-    --chat-bubble-border: 217 30% 40% / 0.12; 
-    --chat-bubble-shadow: 220 40% 2% / 0.2;
+    --chat-bubble-bg: 217 25% 10% / 0.6;
+    --chat-bubble-border: 217 30% 40% / 0.08;
+    --chat-bubble-shadow: 220 40% 2% / 0.15;
     
     /* Refined user message bubble variables for dark mode */
-    --user-bubble-bg: 221 70% 25% / 0.25;
-    --user-bubble-gradient: linear-gradient(135deg, hsla(221, 70%, 25%, 0.3), hsla(230, 70%, 20%, 0.25));
-    --user-bubble-border: 217 70% 60% / 0.15;
+    --user-bubble-bg: 221 70% 25% / 0.2;
+    --user-bubble-gradient: linear-gradient(135deg, hsla(221, 70%, 25%, 0.25), hsla(230, 70%, 20%, 0.2));
+    --user-bubble-border: 217 70% 60% / 0.12;
     --user-bubble-shadow: 220 70% 10% / 0.25;
     
     /* Noise texture */
-    --noise-opacity: 0.03;
+    --noise-opacity: 0.02;
   }
 }
 
@@ -147,7 +147,7 @@ body {
   }
 
   .rich-text p {
-    @apply leading-relaxed text-foreground/90;
+    @apply leading-relaxed text-foreground/90 tracking-[-0.01em];
   }
 
   .rich-text a {
@@ -159,7 +159,7 @@ body {
   }
 
   .rich-text code {
-    @apply text-primary bg-primary/5 rounded px-1 py-0.5 text-sm font-mono;
+    @apply text-primary/90 bg-primary/5 rounded-md px-1.5 py-0.5 text-sm font-mono tracking-tight;
   }
 }
 
@@ -167,9 +167,9 @@ body {
 @layer components {
   .glass-panel {
     background-color: hsla(var(--glass-background));
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(25px);
     border: 1px solid hsla(var(--glass-border));
-    box-shadow: 0 12px 40px -10px hsla(var(--glass-shadow));
+    box-shadow: 0 10px 30px -10px hsla(var(--glass-shadow));
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     position: relative;
   }
@@ -187,11 +187,11 @@ body {
   
   .glass-panel-elevated {
     background-color: hsla(var(--glass-background));
-    backdrop-filter: blur(25px);
+    backdrop-filter: blur(30px);
     border: 1px solid hsla(var(--glass-border));
     box-shadow: 
-      0 20px 50px -12px hsla(var(--glass-shadow)), 
-      0 2px 6px 0 hsla(var(--glass-shadow)),
+      0 15px 40px -12px hsla(var(--glass-shadow)), 
+      0 2px 4px 0 hsla(var(--glass-shadow)/0.5),
       inset 0 1px 0 0 hsla(var(--glass-highlight));
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     position: relative;
@@ -209,11 +209,11 @@ body {
   }
   
   .glass-input {
-    background-color: hsla(var(--glass-background) / 0.05);
-    backdrop-filter: blur(25px);
+    background-color: hsla(var(--glass-background) / 0.03);
+    backdrop-filter: blur(30px);
     border: 1px solid hsla(var(--glass-border));
     box-shadow: 
-      0 8px 20px -8px hsla(var(--glass-shadow)),
+      0 6px 16px -8px hsla(var(--glass-shadow)),
       inset 0 1px 0 0 hsla(var(--glass-highlight));
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     position: relative;
@@ -232,13 +232,13 @@ body {
   
   /* Enhanced AI message bubble */
   .glass-card {
-    border-radius: 1.75rem; /* Even more rounded corners */
+    border-radius: 1.5rem;
     background-color: hsla(var(--chat-bubble-bg));
-    backdrop-filter: blur(24px);
+    backdrop-filter: blur(25px);
     border: 1px solid hsla(var(--chat-bubble-border));
     box-shadow: 
-      0 12px 36px -10px hsla(var(--chat-bubble-shadow)),
-      inset 0 1px 0 0 hsla(var(--glass-highlight));
+      0 10px 30px -10px hsla(var(--chat-bubble-shadow)),
+      inset 0 1px 0 0 hsla(var(--glass-highlight)/0.5);
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     position: relative;
   }
@@ -255,21 +255,21 @@ body {
   }
   
   .glass-card:hover {
-    transform: translateY(-3px) scale(1.005);
+    transform: translateY(-2px) scale(1.003);
     box-shadow: 
-      0 22px 44px -14px hsla(var(--chat-bubble-shadow)),
-      inset 0 1px 0 0 hsla(var(--glass-highlight));
+      0 18px 36px -12px hsla(var(--chat-bubble-shadow)),
+      inset 0 1px 0 0 hsla(var(--glass-highlight)/0.5);
   }
   
   /* Enhanced user message bubble with refined gradient */
   .user-glass-card {
-    border-radius: 1.75rem; /* Even more rounded corners */
+    border-radius: 1.5rem;
     background: var(--user-bubble-gradient);
-    backdrop-filter: blur(24px);
+    backdrop-filter: blur(25px);
     border: 1px solid hsla(var(--user-bubble-border));
     box-shadow: 
-      0 12px 36px -10px hsla(var(--user-bubble-shadow)),
-      inset 0 1px 0 0 hsla(var(--glass-highlight));
+      0 10px 30px -10px hsla(var(--user-bubble-shadow)),
+      inset 0 1px 0 0 hsla(var(--glass-highlight)/0.5);
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     position: relative;
   }
@@ -286,20 +286,20 @@ body {
   }
   
   .user-glass-card:hover {
-    transform: translateY(-3px) scale(1.005);
+    transform: translateY(-2px) scale(1.003);
     box-shadow: 
-      0 22px 44px -14px hsla(var(--user-bubble-shadow)),
-      inset 0 1px 0 0 hsla(var(--glass-highlight));
+      0 18px 36px -12px hsla(var(--user-bubble-shadow)),
+      inset 0 1px 0 0 hsla(var(--glass-highlight)/0.5);
   }
   
   .glass-button {
-    border-radius: 9999px; /* rounded-full */
+    border-radius: 9999px;
     background-color: hsla(var(--glass-background));
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(25px);
     border: 1px solid hsla(var(--glass-border));
     box-shadow: 
-      0 8px 18px -6px hsla(var(--glass-shadow)),
-      inset 0 1px 0 0 hsla(var(--glass-highlight));
+      0 6px 14px -6px hsla(var(--glass-shadow)),
+      inset 0 1px 0 0 hsla(var(--glass-highlight)/0.5);
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     position: relative;
   }
@@ -316,10 +316,10 @@ body {
   }
   
   .glass-button:hover {
-    transform: translateY(-3px) scale(1.05);
+    transform: translateY(-2px) scale(1.03);
     box-shadow: 
-      0 14px 28px -10px hsla(var(--glass-shadow)),
-      inset 0 1px 0 0 hsla(var(--glass-highlight));
+      0 10px 20px -8px hsla(var(--glass-shadow)),
+      inset 0 1px 0 0 hsla(var(--glass-highlight)/0.5);
   }
 }
 
@@ -359,19 +359,19 @@ body {
 
 @keyframes gentle-pulse {
   0% {
-    opacity: 0.7;
-    transform: scale(0.97);
-    box-shadow: 0 10px 30px -12px hsla(var(--primary), 0.15);
+    opacity: 0.8;
+    transform: scale(0.98);
+    box-shadow: 0 8px 25px -10px hsla(var(--primary), 0.12);
   }
   50% {
     opacity: 1;
-    transform: scale(1.02);
-    box-shadow: 0 15px 40px -15px hsla(var(--primary), 0.3);
+    transform: scale(1.01);
+    box-shadow: 0 12px 30px -12px hsla(var(--primary), 0.2);
   }
   100% {
-    opacity: 0.7;
-    transform: scale(0.97);
-    box-shadow: 0 10px 30px -12px hsla(var(--primary), 0.15);
+    opacity: 0.8;
+    transform: scale(0.98);
+    box-shadow: 0 8px 25px -10px hsla(var(--primary), 0.12);
   }
 }
 

@@ -33,7 +33,7 @@ export function ReasoningBlockComponent({ block }: ReasoningBlockProps) {
     <motion.div
       initial={{ opacity: 0, y: -5 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-muted/50 dark:bg-muted/40 rounded-lg overflow-hidden transition-all duration-200 hover:bg-muted/60 dark:hover:bg-muted/50 shadow-md"
+      className="bg-muted/30 dark:bg-muted/20 rounded-xl overflow-hidden transition-all duration-200 hover:bg-muted/40 dark:hover:bg-muted/30 shadow-sm"
     >
       <button
         role="button"
@@ -41,17 +41,17 @@ export function ReasoningBlockComponent({ block }: ReasoningBlockProps) {
         aria-expanded={isExpanded}
         aria-controls={`content-${block.type}-${block.iteration}`}
         className={cn(
-          "w-full p-3 flex items-center justify-between text-sm font-medium",
-          "text-muted-foreground hover:text-foreground",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "w-full p-2.5 flex items-center justify-between text-sm",
+          "text-muted-foreground/80 hover:text-foreground/90",
+          "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1",
           "transition-all duration-200"
         )}
         onClick={() => setIsExpanded(!isExpanded)}
         onKeyDown={handleKeyDown}
       >
         <div className="flex items-center gap-2">
-          <div className="p-1 rounded-md bg-background/70 dark:bg-background/50">
-            <Icon className="h-4 w-4" aria-hidden="true" />
+          <div className="p-1 rounded-md bg-background/50 dark:bg-background/30 shadow-sm">
+            <Icon className="h-3.5 w-3.5" aria-hidden="true" />
           </div>
           <span className="text-sm font-medium">
             {title} {block.iteration > 1 ? `#${block.iteration}` : ""}
@@ -60,7 +60,7 @@ export function ReasoningBlockComponent({ block }: ReasoningBlockProps) {
         <ChevronDown
           aria-hidden="true"
           className={cn(
-            "h-4 w-4 transition-transform duration-200",
+            "h-3.5 w-3.5 transition-transform duration-200",
             isExpanded ? "rotate-180" : ""
           )}
         />
@@ -78,8 +78,8 @@ export function ReasoningBlockComponent({ block }: ReasoningBlockProps) {
             exit="collapsed"
             transition={{ duration: 0.2, ease: "easeInOut" }}
           >
-            <div className="px-4 pb-3 pt-1 border-t border-muted/40 dark:border-muted/50 bg-muted/20 dark:bg-muted/15">
-              <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">
+            <div className="px-4 pb-3 pt-1 border-t border-muted/30 dark:border-muted/40 bg-muted/10 dark:bg-muted/5">
+              <p className="text-sm text-muted-foreground/90 whitespace-pre-wrap leading-relaxed">
                 {block.content}
               </p>
             </div>

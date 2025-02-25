@@ -39,15 +39,15 @@ export function ReasoningPartComponent({ part, isStreaming = false }: ReasoningP
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -5 }}
+      initial={{ opacity: 0, y: -4 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
       className={cn(
-        "rounded-lg overflow-hidden",
+        "rounded-xl overflow-hidden",
         "transition-all duration-300 ease-out",
-        "max-w-[92%] bg-muted/50 dark:bg-muted/40 backdrop-blur-md",
-        "border border-muted/60 dark:border-muted/50",
-        "shadow-[0_8px_20px_-6px_rgba(0,0,0,0.12)]"
+        "max-w-[90%] bg-muted/30 dark:bg-muted/20 backdrop-blur-xl",
+        "border border-muted/40 dark:border-muted/30",
+        "shadow-[0_6px_16px_-8px_rgba(0,0,0,0.08)]"
       )}
     >
       <button
@@ -56,24 +56,24 @@ export function ReasoningPartComponent({ part, isStreaming = false }: ReasoningP
         aria-expanded={isExpanded}
         aria-controls="reasoning-content"
         className={cn(
-          "w-full p-3.5 flex items-center justify-between",
-          "text-muted-foreground hover:text-foreground",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "w-full p-3 flex items-center justify-between",
+          "text-muted-foreground/80 hover:text-foreground/90",
+          "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1",
           "transition-all duration-200",
-          "hover:bg-muted/20 active:bg-muted/30",
-          "rounded-t-lg"
+          "hover:bg-muted/10 active:bg-muted/20",
+          "rounded-t-xl"
         )}
         onClick={() => setIsExpanded(!isExpanded)}
         onKeyDown={handleKeyDown}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <div className={cn(
             "p-1.5 rounded-full",
-            "bg-muted/30 backdrop-blur-md",
-            "border border-muted/40",
+            "bg-muted/20 backdrop-blur-xl",
+            "border border-muted/30",
             "shadow-sm"
           )}>
-            <Brain className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+            <Brain className="h-3.5 w-3.5 text-muted-foreground/70" aria-hidden="true" />
           </div>
           <span className={cn(
             "text-sm font-medium tracking-tight",
@@ -85,9 +85,9 @@ export function ReasoningPartComponent({ part, isStreaming = false }: ReasoningP
         <ChevronDown
           aria-hidden="true"
           className={cn(
-            "h-4 w-4 transition-transform duration-300 ease-out",
+            "h-3.5 w-3.5 transition-transform duration-300 ease-out",
             isExpanded ? "rotate-180" : "",
-            "text-muted-foreground/70"
+            "text-muted-foreground/60"
           )}
         />
       </button>
@@ -104,12 +104,12 @@ export function ReasoningPartComponent({ part, isStreaming = false }: ReasoningP
             exit="collapsed"
           >
             <div className={cn(
-              "px-5 pb-4 pt-1",
-              "border-t border-muted/40 dark:border-muted/50 bg-muted/20 dark:bg-muted/15",
-              "bg-[radial-gradient(#00000008_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff05_1px,transparent_1px)]",
-              "bg-[size:20px_20px]"
+              "px-4 pb-3 pt-1",
+              "border-t border-muted/30 dark:border-muted/40 bg-muted/10 dark:bg-muted/10",
+              "bg-[radial-gradient(#00000005_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff03_1px,transparent_1px)]",
+              "bg-[size:24px_24px]"
             )}>
-              <div className="text-sm text-muted-foreground space-y-2">
+              <div className="text-sm text-muted-foreground/90 space-y-2">
                 {part.details.map((detail, index) => (
                   <motion.div 
                     key={index} 

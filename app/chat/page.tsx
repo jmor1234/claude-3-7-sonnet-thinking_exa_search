@@ -145,12 +145,12 @@ export default function ChatPage() {
         "relative overflow-hidden"
       )}
     >
-      {/* Premium background effects */}
-      <div className="absolute inset-0 z-[-1] bg-[radial-gradient(#00000002_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff01_1px,transparent_1px)] bg-[size:32px_32px]" />
-      <div className="absolute inset-0 z-[-2] opacity-30 bg-[linear-gradient(to_right,transparent_0%,rgba(var(--primary-rgb),0.05)_50%,transparent_100%)]" style={{"--primary-rgb": "var(--primary)".replace("hsl(", "").replace(")", "").split(" ")[0]} as React.CSSProperties} />
-      <div className="absolute inset-0 z-[-3] opacity-60">
-        <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[35%] rounded-full bg-primary/[0.02] filter blur-[80px]" />
-        <div className="absolute bottom-[-5%] left-[-10%] w-[50%] h-[40%] rounded-full bg-primary/[0.01] filter blur-[100px]" />
+      {/* More subtle background effects */}
+      <div className="absolute inset-0 z-[-1] bg-[radial-gradient(#00000001_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff005_1px,transparent_1px)] bg-[size:40px_40px]" />
+      <div className="absolute inset-0 z-[-2] opacity-20 bg-[linear-gradient(to_right,transparent_0%,rgba(var(--primary-rgb),0.03)_50%,transparent_100%)]" style={{"--primary-rgb": "var(--primary)".replace("hsl(", "").replace(")", "").split(" ")[0]} as React.CSSProperties} />
+      <div className="absolute inset-0 z-[-3] opacity-40">
+        <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[35%] rounded-full bg-primary/[0.01] filter blur-[100px]" />
+        <div className="absolute bottom-[-5%] left-[-10%] w-[50%] h-[40%] rounded-full bg-primary/[0.005] filter blur-[120px]" />
       </div>
       
       <ScrollArea 
@@ -176,10 +176,10 @@ export default function ChatPage() {
                 ease: [0.16, 1, 0.3, 1]
               }}
               className={cn(
-                "flex items-center justify-center w-20 h-20 mb-10 rounded-3xl",
-                "glass-panel-elevated backdrop-blur-2xl frost-effect",
-                "shadow-[0_18px_35px_-8px_rgba(0,0,0,0.1),inset_0_1px_0_0_rgba(255,255,255,0.1)]",
-                "border border-neutral-200/15 dark:border-neutral-700/25",
+                "flex items-center justify-center w-18 h-18 mb-8 rounded-2xl",
+                "glass-panel-elevated backdrop-blur-xl",
+                "shadow-[0_15px_30px_-10px_rgba(0,0,0,0.08),inset_0_1px_0_0_rgba(255,255,255,0.08)]",
+                "border border-neutral-200/10 dark:border-neutral-700/20",
                 "transition-all duration-500 ease-out"
               )}>
               <motion.div
@@ -191,9 +191,9 @@ export default function ChatPage() {
                   damping: 15,
                   delay: 0.4
                 }}
-                className="p-5 flex items-center justify-center"
+                className="p-4.5 flex items-center justify-center"
               >
-                <MessageSquare className="h-10 w-10 opacity-50 text-primary/40 animate-shimmer" />
+                <MessageSquare className="h-9 w-9 opacity-40 text-primary/30 animate-shimmer" />
               </motion.div>
             </motion.div>
             <motion.h2 
@@ -208,13 +208,13 @@ export default function ChatPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-sm mt-1 opacity-70 text-center max-w-md"
+              className="text-sm mt-1 opacity-60 text-center max-w-md"
             >
               Experience Claude&apos;s advanced reasoning and contextual understanding capabilities
             </motion.p>
           </motion.div>
         ) : (
-          <div className="space-y-10 pb-28">
+          <div className="space-y-8 pb-28">
             <AnimatePresence initial={false} mode="popLayout">
               {messages.map((message) => (
                 <motion.div
@@ -230,8 +230,8 @@ export default function ChatPage() {
                 >
                   {message.role === "user" ? (
                     <motion.div 
-                      className="user-glass-card max-w-[85%] md:max-w-[75%] px-5 py-4 shadow-lg"
-                      whileHover={{ y: -3, boxShadow: "0 24px 45px -12px rgba(0,0,0,0.14), inset 0 1px 0 0 rgba(255,255,255,0.08)"}}
+                      className="user-glass-card max-w-[85%] md:max-w-[75%] px-5 py-4 shadow-sm"
+                      whileHover={{ y: -2, boxShadow: "0 16px 35px -10px rgba(0,0,0,0.1), inset 0 1px 0 0 rgba(255,255,255,0.06)"}}
                     >
                       <MarkdownContent 
                         content={message.content}
@@ -262,38 +262,19 @@ export default function ChatPage() {
                 className="flex justify-start"
               >
                 <div className={cn(
-                  "flex items-center gap-3.5 text-muted-foreground",
-                  "glass-panel rounded-full pl-4 pr-5 py-3",
-                  "animate-gentle-pulse"
+                  "flex items-center gap-3 text-muted-foreground/90",
+                  "glass-panel rounded-full pl-3 pr-4 py-2.5",
+                  "animate-gentle-pulse border border-primary/10"
                 )}>
                   <div className={cn(
-                    "flex items-center justify-center h-7 w-7 rounded-full",
-                    "bg-primary/15 backdrop-blur-2xl",
-                    "border border-primary/20",
-                    "shadow-[0_0_20px_-2px] shadow-primary/15"
+                    "flex items-center justify-center h-6 w-6 rounded-full",
+                    "bg-primary/10 backdrop-blur-xl",
+                    "border border-primary/15",
+                    "shadow-[0_0_15px_-2px] shadow-primary/10"
                   )}>
-                    <Sparkles className="h-4 w-4 text-primary animate-shimmer" />
+                    <Sparkles className="h-3.5 w-3.5 text-primary/80 animate-shimmer" />
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="flex gap-2">
-                      <motion.span
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: 0 }}
-                        className="h-2 w-2 rounded-full bg-primary/50 shadow-[0_0_10px_-1px] shadow-primary/30"
-                      />
-                      <motion.span
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
-                        className="h-2 w-2 rounded-full bg-primary/50 shadow-[0_0_10px_-1px] shadow-primary/30"
-                      />
-                      <motion.span
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.6 }}
-                        className="h-2 w-2 rounded-full bg-primary/50 shadow-[0_0_10px_-1px] shadow-primary/30"
-                      />
-                    </div>
-                    <span className="text-sm font-medium text-gradient animate-shimmer">Claude is thinking...</span>
-                  </div>
+                  <span className="text-sm text-gradient animate-shimmer opacity-90">Claude is thinking...</span>
                 </div>
               </motion.div>
             )}
@@ -304,10 +285,10 @@ export default function ChatPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className={cn(
-                  "p-5 text-sm text-center text-destructive",
-                  "bg-destructive/8 rounded-xl frost-effect",
-                  "glass-panel border border-destructive/25",
-                  "shadow-[0_15px_40px_-15px_rgba(220,38,38,0.2)]"
+                  "p-4 text-sm text-center text-destructive/90",
+                  "bg-destructive/5 rounded-xl",
+                  "glass-panel border border-destructive/15",
+                  "shadow-[0_12px_30px_-12px_rgba(220,38,38,0.15)]"
                 )}
               >
                 {error.message}
@@ -318,7 +299,7 @@ export default function ChatPage() {
           </div>
         )}
       </ScrollArea>
-      <div className="fixed bottom-0 left-0 right-0 bg-background/60 backdrop-blur-2xl border-t border-neutral-200/10 dark:border-neutral-800/15">
+      <div className="fixed bottom-0 left-0 right-0 bg-background/50 backdrop-blur-xl border-t border-neutral-200/5 dark:border-neutral-800/10">
         <div className="max-w-5xl mx-auto w-full px-4 md:px-6 lg:px-8 py-5">
           <ChatInput
             input={input}
