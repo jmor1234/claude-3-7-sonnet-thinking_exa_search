@@ -1,3 +1,5 @@
+// app/chat/_components/reasoning-part.tsx
+
 "use client"
 
 import { Brain, ChevronDown } from "lucide-react"
