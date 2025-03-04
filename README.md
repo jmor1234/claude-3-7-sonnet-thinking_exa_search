@@ -1,4 +1,4 @@
-(temporarily putting the model to gpt-4o-mini due to api costs until my next release, DM me on twitter @jmorin24 if you would like access to 3.7 version)
+(temporarily putting the model to gpt-4o-mini due to api costs until my next release, DM me on twitter @jmorin35 if you would like access to 3.7 version)
 
 # THE BEST MODEL IS THE WORLD CLAUDE 3.7 WITH EXTENDED REASONING ENABLED
 
