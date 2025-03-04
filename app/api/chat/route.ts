@@ -1,6 +1,7 @@
 // app/api/chat/route.ts
 
 import { anthropic } from '@ai-sdk/anthropic';
+import { openai } from '@ai-sdk/openai';
 import { smoothStream, streamText } from 'ai';
 import { contextualWebSearch } from './tools/contextualWebSearch';
 import { SYSTEM_PROMPT } from './prompts/systemPrompt';
@@ -23,15 +24,15 @@ export async function POST(req: Request) {
   let stepCounter = 0;
 
   const result = streamText({
-    model: anthropic('claude-3-7-sonnet-20250219'),
-    providerOptions: {
-      anthropic: {
-        thinking: {
-          type: "enabled",
-          budgetTokens: 12000,
-        },
-      },
-    },
+    model: openai('gpt-4o-mini'),
+    // providerOptions: {
+    //   anthropic: {
+    //     thinking: {
+    //       type: "enabled", 
+    //       budgetTokens: 12000,
+    //     },
+    //   },
+    // },
     system: SYSTEM_PROMPT,
     messages,
     experimental_transform: smoothStream(),

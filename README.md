@@ -1,3 +1,5 @@
+(temporarily putting the model to gpt-4o-mini due to api costs until my next release, DM me on twitter @jmorin24 if you would like access to 3.7 version)
+
 # THE BEST MODEL IS THE WORLD CLAUDE 3.7 WITH EXTENDED REASONING ENABLED
 
 # ADDED THE BEST SEARCH API FOR LLM'S IN THE WORLD EXA FOR CONTEXTUAL AND DEEP RESEARCH
