@@ -1,6 +1,4 @@
 // app/api/chat/route.ts
-
-import { anthropic } from '@ai-sdk/anthropic';
 import { openai } from '@ai-sdk/openai';
 import { smoothStream, streamText } from 'ai';
 import { contextualWebSearch } from './tools/contextualWebSearch';
