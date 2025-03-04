@@ -1,6 +1,6 @@
 // app/api/chat/tools/contextualWebSearch.ts
 
-import { anthropic } from '@ai-sdk/anthropic';
+import { openai } from '@ai-sdk/openai';
 import { tool, generateObject } from 'ai';
 import { z } from 'zod';
 import Exa from 'exa-js';
@@ -68,7 +68,7 @@ export const contextualWebSearch = tool({
     try {
       // Generate contextual queries with enhanced prompt for search type selection
       const { object: generatedQueries } = await generateObject({
-        model: anthropic('claude-3-7-sonnet-20250219'),
+        model: openai('gpt-4o-mini'),
         schema: queryGenSchema,
         prompt: `Based on the following context, generate exactly ${numberOfQueries} search queries to gather comprehensive information:
 
